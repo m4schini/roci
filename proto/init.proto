@@ -1,0 +1,28 @@
+syntax="proto3";
+
+package proto.init.v1;
+option go_package="proto/";
+
+message FromInit {
+  oneof payload {
+    Ready ready = 1;
+    IdMapping map_gid = 2;
+    IdMapping map_uid = 3;
+  }
+}
+
+message Ready {}
+
+message IdMapping {
+  uint32 insideId = 2;
+  uint32 outsideId = 3;
+}
+
+// From Runtime
+message FromRuntime {
+  oneof payload {
+    Start start = 1;
+  }
+}
+
+message Start {}

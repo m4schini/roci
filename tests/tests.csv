@@ -1,0 +1,6 @@
+Step,Runtime Operations,Command,Description,Expected Output
+1,None,\lstinline[language=bash]{sudo podman create --runtime roci alpine sleep 100},"This step is preparation for podman, none of the container operations implemented by roci are used in this step",containerid
+2,"CREATE,START",\lstinline[language=bash]{sudo podman start <containerId form step 1>},In this step the container is started by podman. Podman uses roci to create and start the container,containerId
+3,STATE,\lstinline[language=bash]{sudo roci state <containerId from step 1>},This step confirms that the container is managed by roci and tests the output of the state command,\ref{}
+4,"KILL,DELETE",\lstinline[language=bash]{sudo podman kill <containerId>},In this step the running container is killed by podman using roci.,containerId
+5,"DELETE,STATE",Wait till container stops then \lstinline[language=bash]{sudo roci state <containerId from step 1>},Podman will use the delete operation as soon as the container process is stopped,Error: container does not exist
