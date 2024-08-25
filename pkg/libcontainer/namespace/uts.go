@@ -6,6 +6,7 @@ import (
 	"syscall"
 )
 
+// UTS namespace
 type utsNS struct {
 	specs specs.Spec
 }

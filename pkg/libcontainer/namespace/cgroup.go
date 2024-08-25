@@ -3,8 +3,10 @@ package namespace
 import (
 	"github.com/opencontainers/runtime-spec/specs-go"
 	"go.uber.org/zap"
+	"syscall"
 )
 
+// Cgroup Namespace
 type cgroupNS struct {
 	log *zap.Logger
 }
@@ -16,7 +18,8 @@ func newCgroupNamespace() *cgroupNS {
 }
 
 func (c *cgroupNS) IsSupported() bool {
-	return true
+
+	return false
 }
 
 func (c *cgroupNS) Priority() int {
@@ -29,7 +32,7 @@ func (c *cgroupNS) Type() specs.LinuxNamespaceType {
 
 func (c *cgroupNS) CloneFlag() uintptr {
 	logNsNotImplemented(c.log)
-	return 0 //syscall.CLONE_NEWCGROUP
+	return syscall.CLONE_NEWCGROUP
 }
 
 func (c *cgroupNS) Finalize(spec specs.Spec) error {

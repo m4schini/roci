@@ -6,6 +6,7 @@ import (
 	"syscall"
 )
 
+// Mount Namespace
 type mountNS struct {
 	log *zap.Logger
 }

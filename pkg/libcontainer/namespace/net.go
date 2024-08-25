@@ -3,8 +3,10 @@ package namespace
 import (
 	"github.com/opencontainers/runtime-spec/specs-go"
 	"go.uber.org/zap"
+	"syscall"
 )
 
+// Network Namespace
 type netNS struct {
 	logger *zap.Logger
 }
@@ -16,6 +18,7 @@ func newNetworkNamespace() *netNS {
 }
 
 func (n *netNS) IsSupported() bool {
+	// Network isolation is not implemented in roci
 	return false
 }
 
@@ -29,7 +32,7 @@ func (n *netNS) Type() specs.LinuxNamespaceType {
 
 func (n *netNS) CloneFlag() uintptr {
 	logNsNotImplemented(n.logger)
-	return 0 //syscall.CLONE_NEWNET
+	return syscall.CLONE_NEWNET
 }
 
 func (n *netNS) Finalize(spec specs.Spec) error {

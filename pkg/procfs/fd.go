@@ -38,7 +38,6 @@ func Open(pid int, path string) (*os.File, error) {
 	pidDir := filepath.Join(base, strconv.Itoa(pid))
 	_, err := os.Stat(pidDir)
 	if err != nil {
-		fmt.Println("process not found")
 		return nil, err
 	}
 

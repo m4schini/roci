@@ -5,6 +5,7 @@ import (
 	"syscall"
 )
 
+// Time namespace
 type timeNS struct {
 }
 

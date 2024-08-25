@@ -1,6 +1,3 @@
-/*
-Copyright © 2023 github.com/m4schini
-*/
 package cmd
 
 import (
@@ -16,9 +13,9 @@ import (
 var deleteCmd = &cobra.Command{
 	Use:   "delete [command options] <container-id>",
 	Short: "delete any resources held by the container often used with detached container",
-	Example: `For example, if the container id is "ubuntu01" and runc list currently shows the
+	Example: `For example, if the container id is "ubuntu01" and roci list currently shows the
 status of "ubuntu01" as "stopped" the following will delete resources held for
-"ubuntu01" removing "ubuntu01" from the runc list of containers:
+"ubuntu01" removing "ubuntu01" from the roci list of containers:
 
        # runc delete ubuntu01`,
 	Args:    cobra.ExactArgs(1),
@@ -48,14 +45,5 @@ status of "ubuntu01" as "stopped" the following will delete resources held for
 func init() {
 	rootCmd.AddCommand(deleteCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// deleteCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// deleteCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	deleteCmd.Flags().BoolP("force", "f", false, `Forcibly deletes the container if it is still running (uses SIGKILL)`)
 }

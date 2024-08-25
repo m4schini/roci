@@ -6,9 +6,9 @@ package main
 import (
 	"go.uber.org/zap"
 	"os"
+	"path/filepath"
 	"roci/cmd"
 	"roci/pkg/logger"
-	"roci/pkg/util"
 )
 
 func main() {
@@ -29,7 +29,7 @@ func isInitProcess() bool {
 }
 
 func executeInit() {
-	logger.Set(logger.Log().Named("init").With(zap.String("cid", util.ContainerIdFromStateDirPath(os.Args[2]))))
+	logger.Set(logger.Log().Named("init").With(zap.String("cid", filepath.Base(os.Args[2]))))
 	log := logger.Log()
 
 	log.Debug("running container init")

@@ -15,10 +15,11 @@ const (
 	HookStartContainer
 	HookPostStart
 	HookPostStop
-	//HookPreStart is deprecated
+	// HookPreStart is deprecated
 	HookPreStart
 )
 
+// RunHook executes a single OCI hook with the specified context.
 func RunHook(ctx context.Context, hook specs.Hook) error {
 	var cancel context.CancelFunc = func() {}
 	if hook.Timeout != nil {
@@ -31,6 +32,7 @@ func RunHook(ctx context.Context, hook specs.Hook) error {
 	return cmd.Run()
 }
 
+// RunHooks executes a sequence of hooks in the order they are provided.
 func RunHooks(ctx context.Context, hooks []specs.Hook) (err error) {
 	for _, hook := range hooks {
 		err = RunHook(ctx, hook)
@@ -42,16 +44,19 @@ func RunHooks(ctx context.Context, hooks []specs.Hook) (err error) {
 	return nil
 }
 
+// InvokeHooks runs the hooks corresponding to the specified lifecycle stage.
 func InvokeHooks(hooks *specs.Hooks, hook LifecycleHook) (err error) {
 	return RunHooks(context.Background(), HooksFromSpec(hooks, hook))
 }
 
+// HooksFromSpec retrieves the hooks corresponding to the specified lifecycle stage from the specification.
 func HooksFromSpec(spec *specs.Hooks, hook LifecycleHook) (hooks []specs.Hook) {
 	hooks = make([]specs.Hook, 0)
 	if spec == nil {
 		return hooks
 	}
 
+	// Helper function to safely return the hooks if they are not nil.
 	must := func(h []specs.Hook) []specs.Hook {
 		if h == nil {
 			return hooks
@@ -59,6 +64,7 @@ func HooksFromSpec(spec *specs.Hooks, hook LifecycleHook) (hooks []specs.Hook) {
 		return h
 	}
 
+	// Switch case to select the correct hooks based on the lifecycle stage.
 	switch hook {
 	case HookCreateRuntime:
 		return must(spec.CreateRuntime)

@@ -2,16 +2,21 @@ package model
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 	"syscall"
 )
 
-const (
-	OciSpecFileName  = "config.json"
-	OciStateFileName = "state.json"
-)
-
+// SyscallSignal converts a signal name (either numeric or symbolic) into a syscall.Signal type.
+// If the signalName is numeric, it converts directly.
+// If the signalName is symbolic (e.g., "INT" or "SIGINT"), it returns the corresponding signal.
+// It returns an error if the signal name is unknown.
 func SyscallSignal(signalName string) (syscall.Signal, error) {
+	s, err := strconv.Atoi(signalName)
+	if err == nil {
+		return syscall.Signal(s), nil
+	}
+
 	if !strings.HasPrefix(signalName, "SIG") {
 		signalName = "SIG" + signalName
 	}

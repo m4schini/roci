@@ -1,11 +1,11 @@
 package logger
 
 import (
+	"fmt"
 	"go.uber.org/zap"
 )
 
 func init() {
-	logger := zap.NewNop() //zap.NewDevelopment()
 	Set(logger)
 }
 
@@ -20,4 +20,8 @@ func Set(logger *zap.Logger) {
 
 func Sync() error {
 	return zap.L().Sync()
+}
+
+func LogNotImplemented(feature string) {
+	zap.L().WithOptions(zap.AddCallerSkip(1)).Warn(fmt.Sprintf("not implemented: %v", feature))
 }

@@ -6,6 +6,7 @@ import (
 	"syscall"
 )
 
+// User namespace
 type userNS struct {
 	idMapper procfs.IdMapper
 }

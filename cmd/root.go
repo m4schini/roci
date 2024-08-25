@@ -1,6 +1,3 @@
-/*
-Copyright © 2023 github.com/m4schini
-*/
 package cmd
 
 import (
@@ -28,6 +25,7 @@ var rootCmd = &cobra.Command{
 	Long: `roci is a experimental runtime only intended for testing purposes that implements only a subset of the oci
 runtime specification. This means while the most basic container operations should be compatible enough
 to run, the results and processes might behave different`,
+
 	RunE: CommonPreRunE,
 	FParseErrWhitelist: cobra.FParseErrWhitelist{
 		UnknownFlags: true,
@@ -67,7 +65,7 @@ func initConfig() {
 		viper.SetConfigFile(cfgFile)
 	} else {
 		// Search config in home directory with name ".roci" (without extension).
-		viper.AddConfigPath("/etc/roci")
+		viper.AddConfigPath(configDir)
 		viper.SetConfigType("yaml")
 		viper.SetConfigName("config")
 	}

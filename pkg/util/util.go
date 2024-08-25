@@ -2,11 +2,9 @@ package util
 
 import (
 	"encoding/json"
-	"fmt"
 	"go.uber.org/zap"
 	"os"
 	"os/user"
-	"path/filepath"
 	"strconv"
 )
 
@@ -52,37 +50,17 @@ func WriteJsonFile(path string, v any) error {
 	return json.NewEncoder(f).Encode(v)
 }
 
-func ContainerIdFromStateDirPath(p string) string {
-	return filepath.Base(p)
-}
-
-// HasSudo checks if the current user has sudo (root) rights.
+// HasSudo checks if the current user has sudo (root) privileges.
 func HasSudo() bool {
 	currentUser, err := user.Current()
 	if err != nil {
-		fmt.Println("Error getting current user:", err)
 		return false
 	}
 
 	uid, err := strconv.Atoi(currentUser.Uid)
 	if err != nil {
-		fmt.Println("Error converting UID to integer:", err)
 		return false
 	}
 
 	return uid == 0
-}
-
-func DebugLogToFile(s string) {
-	//f, err := os.OpenFile("/tmp/rocilog", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0777)
-	//if err != nil {
-	//	fmt.Println(err)
-	//} else {
-	//	_, err = fmt.Fprintf(f, s+"\n")
-	//	if err != nil {
-	//		fmt.Println(err)
-	//	}
-	//	f.Sync()
-	//	f.Close()
-	//}
 }

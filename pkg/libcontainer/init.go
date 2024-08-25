@@ -10,6 +10,8 @@ import (
 	"roci/pkg/util"
 )
 
+// InitFromStateDir initializes the container environment using the state directory.
+// It reads the OCI specification from the state directory and then proceeds with initialization.
 func InitFromStateDir(stateDir string) (err error) {
 	log := logger.Log().Named("init")
 	configPath := path.Join(stateDir, model.OciSpecFileName)

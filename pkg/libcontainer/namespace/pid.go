@@ -3,10 +3,10 @@ package namespace
 import (
 	"github.com/opencontainers/runtime-spec/specs-go"
 	"go.uber.org/zap"
-	"os"
 	"syscall"
 )
 
+// PID namespace
 type pidNS struct {
 	logger *zap.Logger
 	spec   specs.Spec
@@ -29,19 +29,11 @@ func (p *pidNS) Type() specs.LinuxNamespaceType {
 }
 
 func (p *pidNS) CloneFlag() uintptr {
-	p.logger.Debug("current pid", zap.Int("pid", os.Getpid()))
 	return syscall.CLONE_NEWPID
 }
 
 func (p *pidNS) Finalize(spec specs.Spec) error {
-	log := p.logger
-
-	//log.Debug("mounting procfs")
-	//if err := syscall.Mount("proc", "proc", "proc", 0, ""); err != nil {
-	//	return err
-	//}
-	p.logger.Debug("current pid", zap.Int("pid", os.Getpid()))
-
-	log.Debug("applied namespace")
+	// the pid namespace needs to be finalized by mounting the procfs in the container root filesystem.
+	// But this is not implemented here, instead its part of the rootfs.FinalizeRootfs
 	return nil
 }

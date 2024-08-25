@@ -1,6 +1,3 @@
-/*
-Copyright © 2023 github.com/m4schini
-*/
 package cmd
 
 import (

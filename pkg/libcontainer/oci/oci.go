@@ -11,6 +11,9 @@ const (
 
 var Version = fmt.Sprintf("%v%v", specs.Version, reducedOciVersionTag)
 
-func Rootfs(spec specs.Root) string {
+func Rootfs(spec *specs.Root) string {
+	if spec == nil {
+		return ""
+	}
 	return spec.Path
 }

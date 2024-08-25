@@ -103,7 +103,7 @@ func unmountInRootfs(rootfs, mountDestination string, force bool) (err error) {
 		}
 	}
 
-	var flags int = syscall.MNT_DETACH
+	var flags int = syscall.MNT_DETACH | syscall.MNT_FORCE
 
 	logger.Log().Debug("unmounting", zap.String("dest", destination), zap.Bool("force", force))
 	err = syscall.Unmount(destination, flags)

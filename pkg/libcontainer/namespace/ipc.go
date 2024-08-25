@@ -5,6 +5,7 @@ import (
 	"syscall"
 )
 
+// IPC Namespace
 type ipcNS struct {
 }
 

@@ -3,6 +3,7 @@ syntax="proto3";
 package proto.init.v1;
 option go_package="proto/";
 
+// Encapsulates messages coming from the init process
 message FromInit {
   oneof payload {
     Ready ready = 1;
@@ -18,7 +19,7 @@ message IdMapping {
   uint32 outsideId = 3;
 }
 
-// From Runtime
+// Encapsulates messages coming from the cmd process
 message FromRuntime {
   oneof payload {
     Start start = 1;

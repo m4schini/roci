@@ -1,6 +1,3 @@
-/*
-Copyright © 2023 github.com/m4schini
-*/
 package cmd
 
 import (
@@ -47,7 +44,6 @@ command(s) that get executed on start, edit the args parameter of the spec.
 		c, err := libcontainer.CreateContainer(confs, containerId, bundleAbs)
 		if err != nil {
 			return err
-			//TODO return errors.Join(err, confs.Remove(containerId))
 		}
 
 		if writePidFile {
@@ -66,15 +62,6 @@ command(s) that get executed on start, edit the args parameter of the spec.
 func init() {
 	rootCmd.AddCommand(createCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// createCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// createCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	createCmd.Flags().StringP("bundle", "b", ".", `path to the root of the bundle directory, defaults to the current directory`)
 	createCmd.Flags().String("pid-file", "", `specify the file to write the process id to`)
 }

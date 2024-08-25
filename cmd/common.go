@@ -9,6 +9,8 @@ import (
 	"roci/pkg/util"
 )
 
+var confs *libcontainer.FS
+
 func CommonPreRunE(cmd *cobra.Command, args []string) (err error) {
 	if !util.HasSudo() {
 		return model.ErrNoSudo
@@ -22,12 +24,8 @@ func CommonPreRunE(cmd *cobra.Command, args []string) (err error) {
 		}
 	}
 
-	//fmt.Println("configDir:", viper.Get(configDirFlag))
-	//fmt.Println("containerDir:", viper.Get(containerDirFlag))
 	return nil
 }
-
-var confs *libcontainer.FS
 
 func ContainerPreRunE(cmd *cobra.Command, args []string) (err error) {
 	if err = CommonPreRunE(cmd, args); err != nil {
