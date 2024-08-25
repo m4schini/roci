@@ -3,6 +3,7 @@ package namespace
 import (
 	"github.com/opencontainers/runtime-spec/specs-go"
 	"go.uber.org/zap"
+	"roci/pkg/logger"
 	"syscall"
 )
 
@@ -31,11 +32,11 @@ func (n *netNS) Type() specs.LinuxNamespaceType {
 }
 
 func (n *netNS) CloneFlag() uintptr {
-	logNsNotImplemented(n.logger)
+	logger.LogNotImplemented("namespace.cgroup")
 	return syscall.CLONE_NEWNET
 }
 
 func (n *netNS) Finalize(spec specs.Spec) error {
-	logNsNotImplemented(n.logger)
+	logger.LogNotImplemented("namespace.cgroup")
 	return nil
 }

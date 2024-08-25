@@ -20,6 +20,10 @@ type FS struct {
 
 // IsProcessRunning checks if a process with the given PID is running.
 func IsProcessRunning(pid int) bool {
+	if pid == 0 {
+		return false
+	}
+
 	// Send a signal 0 to the process to check if it's running
 	// syscall.Kill returns nil if the process is running, or an error otherwise
 	err := syscall.Kill(pid, 0)

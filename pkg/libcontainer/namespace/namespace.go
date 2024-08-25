@@ -86,7 +86,3 @@ func fromNamespaceType(runtime ipc.RuntimePipeWriter, spec specs.Spec, namespace
 		return nil
 	}
 }
-
-func logNsNotImplemented(log *zap.Logger) {
-	log.Warn("namespace not implemented")
-}

@@ -1,4 +1,4 @@
-//go:build benchmark
+//go:build !verbose
 
 package logger
 

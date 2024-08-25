@@ -6,10 +6,7 @@ This is a Go project that utilizes Protocol Buffers (protobuf) for efficient ser
 
 - [Installation](#installation)
 - [Usage](#usage)
-    - [Generating Code with `buf`](#generating-code-with-buf)
 - [Building the Project](#building-the-project)
-    - [Compiling Without Benchmarking](#compiling-without-benchmarking)
-    - [Compiling with Benchmarking](#compiling-with-benchmarking)
 - [Benchmarking](#benchmarking)
 - [License](#license)
 
@@ -40,12 +37,12 @@ To compile the project without the benchmark tag, simply use the go build comman
 go build -o roci
 ```
 
-### Compiling for Benchmarking
+### Compiling (with verbose output)
 
 To include benchmarking code in the compilation, use the -tags flag:
 
 ```shell
-go build -tags benchmark
+go build -tags=verbose
 ```
 
 This will compile the project with any additional code or optimizations enabled by the benchmark tag.
