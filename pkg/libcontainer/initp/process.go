@@ -1,6 +1,7 @@
 package initp
 
 import (
+	"context"
 	"github.com/opencontainers/runtime-spec/specs-go"
 	"os"
 	"os/exec"
@@ -11,10 +12,6 @@ import (
 	"syscall"
 )
 
-const (
-	self = "/proc/self/exe"
-)
-
 type ProcessSpec = specs.Process
 
 type Process struct {
@@ -23,7 +20,7 @@ type Process struct {
 	hooks    *specs.Hooks
 }
 
-func NewInitProcess(rootfs, stateDir string, hooks *specs.Hooks) *Process {
+func NewInitProcess(rootfs, stateDir string, spec *specs.Spec) *Process {
 	cmd, err := prepareCmd(stateDir)
 	if err != nil {
 		panic(err) //TODO
@@ -31,7 +28,7 @@ func NewInitProcess(rootfs, stateDir string, hooks *specs.Hooks) *Process {
 	return &Process{
 		stateDir: stateDir,
 		cmd:      cmd,
-		hooks:    hooks,
+		hooks:    spec.Hooks,
 	}
 }
 
@@ -41,10 +38,11 @@ func (i *Process) Start() (pid int, err error) {
 		return -1, err
 	}
 
-	waitForReady, err := ipc.NewRuntimePipeReader(i.stateDir, procfs.Root)
+	waitForReady, pipe, err := ipc.NewRuntimePipeReader(context.Background(), i.stateDir, procfs.Root)
 	if err != nil {
 		return -1, err
 	}
+	defer pipe.Close()
 
 	logger.Log().Debug("waiting for init process")
 	select {

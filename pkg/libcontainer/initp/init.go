@@ -10,7 +10,6 @@ import (
 	"roci/pkg/libcontainer/namespace"
 	"roci/pkg/libcontainer/rootfs"
 	"roci/pkg/logger"
-	"strings"
 	"syscall"
 )
 

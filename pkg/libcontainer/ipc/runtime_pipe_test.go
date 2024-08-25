@@ -1,6 +1,8 @@
 package ipc
 
 import (
+	"context"
+	"roci/pkg/procfs"
 	"sync"
 	"testing"
 	"time"
@@ -22,9 +24,7 @@ func TestCreateRuntimePipe(t *testing.T) {
 	go func() {
 		defer wg.Done()
 		t.Log("creating runtime pipe reader")
-		waitForReady, err := NewRuntimePipeReader(testStateDir, func() {
-			t.Log("> write-id-mapping called", time.Since(start))
-		})
+		waitForReady, err := NewRuntimePipeReader(context.TODO(), testStateDir, nil)
 		checkErr(t, err)
 		t.Log("created runtime pipe reader")
 
@@ -39,7 +39,7 @@ func TestCreateRuntimePipe(t *testing.T) {
 		checkErr(t, err)
 
 		t.Log("< sending id mapping", time.Since(start))
-		err = pipe.SendIdMapping()
+		err = pipe.MapGid(procfs.PidSelf, 0, 0)
 		checkErr(t, err)
 		t.Log("< send id mapping", time.Since(start))
 

@@ -9,40 +9,30 @@ import (
 
 const initPipeFileName = "init.pipe"
 
-func CreateInitPipe(stateDir string) error {
-	return createPipe(stateDir, initPipeFileName)
+type InitPipeWriter interface {
+	SendStart() error
 }
 
 type InitPipeReader interface {
 	WaitForStart() error
 }
 
-func NewInitPipeReader(stateDir string) (InitPipeReader, error) {
-	p := new(InitPipe)
-	fd, err := newReader(stateDir, initPipeFileName)
-	if err != nil {
-		return nil, err
-	}
-	p.fd = fd
-	return p, nil
-}
-
-type InitPipeWriter interface {
-	SendStart() error
-}
-
-func NewInitPipeWriter(stateDir string) (InitPipeWriter, error) {
-	p := new(InitPipe)
-	fd, err := newWriter(stateDir, initPipeFileName)
-	if err != nil {
-		return nil, err
-	}
-	p.fd = fd
-	return p, nil
-}
-
 type InitPipe struct {
 	fd *os.File
+}
+
+func CreateInitPipe(stateDir string) error {
+	return createPipe(stateDir, initPipeFileName)
+}
+
+func NewInitPipeReader(stateDir string) (InitPipeReader, error) {
+	p := new(InitPipe)
+	fd, err := openPipeReader(stateDir, initPipeFileName)
+	if err != nil {
+		return nil, err
+	}
+	p.fd = fd
+	return p, nil
 }
 
 func (i *InitPipe) WaitForStart() error {
@@ -56,6 +46,16 @@ func (i *InitPipe) WaitForStart() error {
 		}
 	}
 	return fmt.Errorf("pipe closed without start signal")
+}
+
+func NewInitPipeWriter(stateDir string) (InitPipeWriter, error) {
+	p := new(InitPipe)
+	fd, err := openPipeWriter(stateDir, initPipeFileName)
+	if err != nil {
+		return nil, err
+	}
+	p.fd = fd
+	return p, nil
 }
 
 func (i *InitPipe) SendStart() error {

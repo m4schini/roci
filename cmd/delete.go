@@ -27,18 +27,34 @@ status of "ubuntu01" as "stopped" the following will delete resources held for
 			log         = logger.Log().Named("delete")
 		)
 		log.Debug("delete called", zap.String("containerId", containerId), zap.Bool("force", forceFlag))
-		if forceFlag {
-			log.Debug("force delete called")
-			err = confs.Kill(containerId, syscall.SIGKILL)
-			log.Debug("tried to kill process", zap.Error(err))
-		}
 
-		err = confs.Remove(containerId)
-		if err == model.ErrNotExist {
-			log.Debug("tried to delete container that doesn't exist")
-			return nil
+		for {
+			if forceFlag {
+				log.Debug("force delete called")
+				err = confs.Kill(containerId, syscall.SIGKILL)
+				if err != nil && err != model.ErrNotRunning {
+					log.Debug("failed to kill process", zap.Error(err))
+					continue
+				}
+			}
+
+			log.Debug("remove container")
+			err = confs.Remove(containerId)
+			if forceFlag && err == model.ErrRunning {
+				log.Debug("failed to remove container", zap.Error(err))
+				continue
+			}
+			if err == model.ErrNotExist {
+				log.Debug("tried to delete container that doesn't exist")
+				return nil
+			}
+
+			if forceFlag && err != nil {
+				continue
+			}
+
+			return err
 		}
-		return err
 	},
 }
 
