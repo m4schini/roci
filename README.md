@@ -1,6 +1,7 @@
 # roci
 
-This is a Go project that utilizes Protocol Buffers (protobuf) for efficient serialization and deserialization of data structures. The project uses the `buf` CLI tool to generate code from `.proto` files, streamlining the process of managing protobuf definitions.
+This is a experimental project that only implements a small part of the oci runtime specifcation, but still tries to be interoperable with container managers like Podman.
+This project is part of my bachelor thesis and is **not intended for production use**.
 
 ## Table of Contents
 
