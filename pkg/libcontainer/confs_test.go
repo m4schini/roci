@@ -1,28 +1,36 @@
 package libcontainer
 
 import (
-	"github.com/opencontainers/runtime-spec/specs-go"
 	"testing"
 )
 
-func checkErr(t *testing.T, err error) {
-	if err != nil {
-		t.Log(err)
-		t.FailNow()
+func TestValidateId(t *testing.T) {
+	tests := []struct {
+		id    string
+		valid bool
+	}{
+		{"", false},        // Empty string
+		{"abc", true},      // Valid ID
+		{"ABC123", true},   // Valid ID
+		{"abc_123", true},  // Valid ID with underscore
+		{"abc-123", true},  // Valid ID with minus
+		{"abc+123", true},  // Valid ID with plus
+		{"abc.123", true},  // Valid ID with period
+		{".", false},       // Invalid ID: single dot
+		{"..", false},      // Invalid ID: double dots
+		{"abc@123", false}, // Invalid ID: invalid character '@'
+		{"abc$123", false}, // Invalid ID: invalid character '$'
+		{"abc 123", false}, // Invalid ID: space
+		{"abc/123", false}, // Invalid ID: invalid character '/'
 	}
-}
 
-func TestRoot(t *testing.T) {
-	rootDir := "/tmp/roci"
-	root, err := NewContainerFS(rootDir)
-	checkErr(t, err)
+	for _, tt := range tests {
+		t.Run(tt.id, func(t *testing.T) {
+			valid := validateIdFormat(tt.id)
+			if valid != tt.valid {
+				t.Errorf("validateID(%q), expected: %v, actual: %v", tt.id, tt.valid, valid)
+			}
+		})
+	}
 
-	c, err := root.Create("test", specs.Spec{
-		Version: "test",
-	})
-	checkErr(t, err)
-
-	t.Log(c.id)
-	t.Log(c.stateDir)
-	t.Log(c.config)
 }

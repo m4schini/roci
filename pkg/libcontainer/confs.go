@@ -20,7 +20,7 @@ import (
 )
 
 var (
-	validIdRx = regexp.MustCompile(`[0-9A-Za-z_+\-.]+`)
+	validIdRx = regexp.MustCompile(`^[0-9A-Za-z_+\-.]+$`)
 )
 
 // ContainerFS defines the interface for container file system operations.
@@ -341,5 +341,13 @@ func (r *FS) assertContainerNotExists(id string) error {
 
 // validateIdFormat checks if the container ID is in a valid format using a regular expression.
 func validateIdFormat(id string) bool {
-	return validIdRx.MatchString(id)
+	switch {
+	case id == ".":
+		return false
+	case id == "..":
+		return false
+
+	default:
+		return validIdRx.MatchString(id)
+	}
 }

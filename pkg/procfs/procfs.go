@@ -1,6 +1,7 @@
 package procfs
 
 import (
+	"fmt"
 	"syscall"
 )
 
@@ -19,6 +20,7 @@ type FS struct {
 }
 
 // IsProcessRunning checks if a process with the given PID is running.
+// Pid 0 is always false
 func IsProcessRunning(pid int) bool {
 	if pid == 0 {
 		return false
@@ -40,7 +42,12 @@ func IsProcessRunning(pid int) bool {
 	return false
 }
 
+// WaitForProcessStop waits for the process with the specified pid to stop
+// Pid 0 returns always an error
 func WaitForProcessStop(pid int) error {
+	if pid == 0 {
+		return fmt.Errorf("can't wait for pid 0")
+	}
 	var status syscall.WaitStatus
 
 	for {

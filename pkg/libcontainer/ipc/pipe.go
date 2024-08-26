@@ -13,21 +13,25 @@ import (
 	"time"
 )
 
+// createPipe creates fifo special file inside stateDir with pipeName
 func createPipe(stateDir, pipeName string) error {
 	fifoPath := filepath.Join(stateDir, pipeName)
 	return syscall.Mkfifo(fifoPath, 0666)
 }
 
+// openPipeReader opens the fifo special file with read access inside stateDir with pipeName
 func openPipeReader(stateDir, pipeName string) (*os.File, error) {
 	fifoPath := filepath.Join(stateDir, pipeName)
 	return os.OpenFile(fifoPath, os.O_RDONLY|os.O_CREATE, os.ModeNamedPipe)
 }
 
+// openPipeWriter opens the fifo special file with write access inside stateDir with pipeName
 func openPipeWriter(stateDir, pipeName string) (*os.File, error) {
 	fifoPath := filepath.Join(stateDir, pipeName)
 	return os.OpenFile(fifoPath, os.O_WRONLY|os.O_CREATE, os.ModeNamedPipe)
 }
 
+// write encodes message and writes it into pipe
 func write(pipe io.Writer, message proto.Message) error {
 	payload, err := proto.Marshal(message)
 	if err != nil {
@@ -46,6 +50,9 @@ func write(pipe io.Writer, message proto.Message) error {
 	return nil
 }
 
+// read reads from pipe, decodes incoming data and returns the decoded message
+// If no data was read it returns read=false. Retry if this happens
+// If something went wrong an error is returned.
 func read(pipe io.Reader) (part []byte, read bool, err error) {
 	var length uint32
 	err = binary.Read(pipe, binary.LittleEndian, &length)
@@ -61,6 +68,7 @@ func read(pipe io.Reader) (part []byte, read bool, err error) {
 	return part, true, nil
 }
 
+// Listen reads messages from a pipe and returns them in a stream
 func Listen[T proto.Message](ctx context.Context, pipe io.Reader, newInstance func() T) chan T {
 	ch := make(chan T, 1)
 	go func() {
@@ -96,66 +104,16 @@ func Listen[T proto.Message](ctx context.Context, pipe io.Reader, newInstance fu
 	return ch
 }
 
-//func listen[T proto.Message](ctx context.Context, pipe *os.File) chan T {
-//	ctx, cancel := context.WithCancel(ctx)
-//	ch := make(chan T, 1)
-//	go func() {
-//		defer cancel()
-//		defer close(ch)
-//		var err error
-//		for rawmessage := range Listen(ctx, pipe) {
-//			var message T
-//			err = proto.Unmarshal(rawmessage, message)
-//			if err != nil {
-//				break
-//			}
-//
-//			ch <- message
-//		}
-//	}()
-//	return ch
-//}
-
-func readFromInit(ctx context.Context, fifo *os.File) chan *pb.FromInit {
+// listenRuntimePipe uses Listen to read messages from the runtime pipe
+func listenRuntimePipe(ctx context.Context, fifo *os.File) chan *pb.FromInit {
 	return Listen(ctx, fifo, func() *pb.FromInit {
 		return new(pb.FromInit)
 	})
-	//ctx, cancel := context.WithCancel(ctx)
-	//ch := make(chan *pb.FromInit, 1)
-	//go func() {
-	//	defer cancel()
-	//	defer close(ch)
-	//	for payload := range Listen(ctx, fifo) {
-	//		var message pb.FromInit
-	//		err := proto.Unmarshal(payload, &message)
-	//		if err != nil {
-	//			break
-	//		}
-	//
-	//		ch <- &message
-	//	}
-	//}()
-	//return ch
 }
 
-func readFromRuntime(ctx context.Context, fifo *os.File) chan *pb.FromRuntime {
+// listenInitPipe uses Listen to read messages from the init pipe
+func listenInitPipe(ctx context.Context, fifo *os.File) chan *pb.FromRuntime {
 	return Listen(ctx, fifo, func() *pb.FromRuntime {
 		return new(pb.FromRuntime)
 	})
-	//ctx, cancel := context.WithCancel(ctx)
-	//ch := make(chan *pb.FromRuntime, 1)
-	//go func() {
-	//	defer cancel()
-	//	defer close(ch)
-	//	for payload := range Listen(ctx, fifo) {
-	//		var message pb.FromRuntime
-	//		err := proto.Unmarshal(payload, &message)
-	//		if err != nil {
-	//			break
-	//		}
-	//
-	//		ch <- &message
-	//	}
-	//}()
-	//return ch
 }
