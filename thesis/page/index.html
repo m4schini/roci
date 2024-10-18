@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+    <!-- Replace the content tag with appropriate information -->
+    <meta content="Minimal implementation of the OCI runtime specification" name="description">
+    <meta content="Minimal implementation of the OCI runtime specification" property="og:title"/>
+    <meta content="Implementing an experimental subset of the OCI runtime specification to reduce overhead for embedded Linux systems" property="og:description"/>
+    <meta content="m4schini.github.io/roci" property="og:url"/>
+    <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+<!--    <meta content="static/image/your_banner_image.png" property="og:image"/>-->
+    <meta content="1200" property="og:image:width"/>
+    <meta content="630" property="og:image:height"/>
+
+
+    <meta content="Minimal implementation of the OCI runtime specification" name="twitter:title">
+    <meta content="Implementing an experimental subset of the OCI runtime specification to reduce overhead for embedded Linux systems" name="twitter:description">
+    <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+<!--    <meta content="static/images/your_twitter_banner_image.png" name="twitter:image">-->
+<!--    <meta content="summary_large_image" name="twitter:card">-->
+    <!-- Keywords for your paper to be indexed by-->
+    <meta content="OCI Docker Linux" name="keywords">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+
+    <title>Minimal implementation of the OCI runtime specification - Bachelor's Thesis</title>
+    <link href="static/images/roci64.png" rel="icon" type="image/png">
+    <!--  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">-->
+
+    <link href="static/css/bulma.min.css" rel="stylesheet">
+    <link href="static/css/bulma-carousel.min.css" rel="stylesheet">
+    <link href="static/css/bulma-slider.min.css" rel="stylesheet">
+    <link href="static/css/fontawesome.all.min.css" rel="stylesheet">
+    <link href="static/css/academicons.min.css" rel="stylesheet">
+    <link href="static/css/index.css" rel="stylesheet">
+
+    <script src="static/js/jquery.mis.js"></script>
+    <!--  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>-->
+    <script defer src="static/js/fontawesome.all.min.js"></script>
+    <script src="static/js/bulma-carousel.min.js"></script>
+    <script src="static/js/bulma-slider.min.js"></script>
+    <script src="static/js/index.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered">
+                <div class="column has-text-centered">
+                    <h1 class="title is-1 publication-title">Minimal implementation of the OCI runtime specification</h1>
+                    <h2 class="title is-5 publication-title">Implementing an experimental subset of the OCI runtime
+                        specification to reduce overhead for embedded Linux systems</h2>
+                    <div class="is-size-5 publication-authors">
+                        <!-- Paper authors -->
+                        <span class="author-block">
+                <a href="https://github.com/m4schini" target="_blank">Alex Schink</a></span>
+                    </div>
+
+                    <div class="is-size-5 publication-authors">
+                        <span class="author-block">University of Applied Sciences Wedel<br>Bachelor's Thesis</span>
+                    </div>
+
+                    <div class="column has-text-centered">
+                        <div class="publication-links">
+                            <!-- Supplementary PDF link -->
+                            <span class="link-block">
+                      <a class="external-link button is-normal is-rounded is-dark" href="../thesis_m4schini.pdf"
+                         target="_blank">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Thesis</span>
+                    </a>
+                  </span>
+
+                            <!-- Github link -->
+                            <span class="link-block">
+                    <a class="external-link button is-normal is-rounded is-dark" href="https://github.com/m4schini/roci"
+                       target="_blank">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+    <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Abstract</h2>
+                <div class="content has-text-justified">
+                    <p>
+                        This thesis explores the intersection of cloud technologies and embedded systems by investigating
+                        the potential of adapting containerization to resource-constrained embedded systems. With
+                        the rise of IoT and edge computing, there is an increasing opportunity to bring the portability
+                        and automation benefits of containers into embedded deployments without overwhelming the
+                        limited resources available. <br><br>
+                        The primary objectives were to gain a deep understanding of the Linux features that enable
+                        containerization, especially namespaces and cgroups, and to develop a minimal container runtime
+                        compatible with the Open Container Initiative (OCI) specifications. The research involved
+                        analyzing existing container technologies, designing a minimal runtime, and implementing it in
+                        a way that preserves key container benefits while minimizing overhead. <br><br>
+                        Despite significant challenges, due to the lack of standardized API s and the exploratory nature of
+                        implementing the OCI runtime specification, the thesis successfully demonstrates the feasibility
+                        of creating a minimal container runtime. Although a big part of the OCI specification including
+                        network isolation was excluded due to its complexity, the resulting runtime is compatible with
+                        container managers like Podman and can create containers similar to standard implementations.
+                        This work is an exploration into the adaptation of cloud-native technologies in embedded
+                        systems, covering an interesting intersection of modern software engineering.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End paper abstract -->
+
+
+
+
+<!--BibTex citation -->
+<section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+        <h2 class="title">BibTeX</h2>
+        <pre><code>
+            @thesis{schink2024oci,
+              author       = {Alex Schink},
+              title        = {Minimal implementation of the {OCI} runtime specification},
+              year         = {2024},
+              school       = {University of Applied Sciences Wedel},
+              type         = {Bachelor's thesis},
+              address      = {Wedel, Germany},
+            }
+        </code></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-8">
+                <div class="content">
+
+                    <p>
+                        This page was built using the <a
+                            href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic
+                        Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io"
+                                                                                target="_blank">Nerfies</a> project
+                        page.
+                        You are free to borrow the source code of this website, we just ask that you link back to this
+                        page in the footer. <br> This website is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/"
+                                                                                     rel="license"
+                                                                                     target="_blank">Creative
+                        Commons Attribution-ShareAlike 4.0 International License</a>.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+<!-- End of Statcounter Code -->
+
+</body>
+</html>
