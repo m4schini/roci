@@ -1,7 +1,9 @@
 # roci
 
-`roci` (**r**educed **oci** runtime) is an experimental container runtime that only implements a small part of the oci runtime specifcation, but still tries to be interoperable with container managers like Podman.
-This project is part of my bachelor thesis and is **not intended for production use**.
+`roci` (**R**educed **OCI** Runtime) is an experimental container runtime that implements only a subset of the OCI runtime specification, yet strives to maintain interoperability with container managers such as Podman.
+This project is part of my Bachelor's thesis and is **not intended for use in a production environment**.
+
+The bachelor's thesis was graded as "very good". You can access the thesis at [/thesis](/thesis/thesis_m4schini.pdf).
 
 ## Table of Contents
 
