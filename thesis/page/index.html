@@ -61,7 +61,7 @@
                     <div class="is-size-5 publication-authors">
                         <!-- Paper authors -->
                         <span class="author-block">
-                <a href="https://github.com/m4schini" target="_blank">Alex Schink</a></span>
+                <a href="https://github.com/m4schini" target="_blank">m4schini</a></span>
                     </div>
 
                     <div class="is-size-5 publication-authors">
@@ -133,16 +133,47 @@
 </section>
 <!-- End paper abstract -->
 
+<section class="section hero">
+    <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Runtime</h2>
+                <div class="content has-text-justified">
+                    <p>
+                        Roci (Reduced OCI Runtime) is the runtime implemented based on the theoretical background and design described in the thesis. It closely follows the container lifecycle defined in the OCI runtime specification.
+                    </p>
+                </div>
+                <img src="static/images/architecture.png" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section hero is-light">
+    <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Results</h2>
+                <div class="content has-text-justified">
+                    <p>
+                        Roci outperforms the reference implementation of the OCI runtime specification runc by ~67%. But it falls behind the C implementation crun, being slower by ~20%, while implementing the complete OCI runtime specification.
+                    </p>
+                </div>
+                <img src="static/images/table.png" alt="">
+            </div>
+        </div>
+    </div>
+</section>
 
 
 
 <!--BibTex citation -->
-<section class="section" id="BibTeX">
+<section class="section is-light" id="BibTeX">
     <div class="container is-max-desktop content">
         <h2 class="title">BibTeX</h2>
         <pre><code>
             @thesis{schink2024oci,
-                author       = {Alex Schink},
+                author       = {m4schini},
                 title        = {Minimal implementation of the {OCI} runtime specification},
                 year         = {2024},
                 school       = {University of Applied Sciences Wedel},
@@ -180,12 +211,5 @@
         </div>
     </div>
 </footer>
-
-<!-- Statcounter tracking code -->
-
-<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
-
-<!-- End of Statcounter Code -->
-
 </body>
 </html>
